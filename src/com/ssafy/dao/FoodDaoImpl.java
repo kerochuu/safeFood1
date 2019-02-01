@@ -14,6 +14,8 @@ import com.ssafy.vo.Food;
 import com.ssafy.vo.FoodPageBean;
 import com.ssafy.vo.SafeFoodException;
 
+import com.ssafy.util.FoodSaxParser;
+
 public class FoodDaoImpl implements FoodDao{
 	private List<Food> foods;
 	public FoodDaoImpl() {
@@ -25,9 +27,7 @@ public class FoodDaoImpl implements FoodDao{
 	 */
 	public void loadData() {
 		FoodSaxParser f = new FoodSaxParser();
-		foods = ;//  FoodNutritionSaxPaser를 이용하여 Food 데이터들을 가져온다
-				
-				
+		foods = f.getFoods();//  FoodNutritionSaxPaser를 이용하여 Food 데이터들을 가져온다		
 	}
 	
 	
