@@ -24,8 +24,8 @@ public class FoodDaoImpl implements FoodDao{
 	 * 식품 영양학 정보와 식품 정보를  xml 파일에서 읽어온다.
 	 */
 	public void loadData() {
-		
-		foods = //  FoodNutritionSaxPaser를 이용하여 Food 데이터들을 가져온다
+		FoodSaxParser f = new FoodSaxParser();
+		foods = ;//  FoodNutritionSaxPaser를 이용하여 Food 데이터들을 가져온다
 				
 				
 	}
@@ -61,19 +61,24 @@ public class FoodDaoImpl implements FoodDao{
 						}
 					}
 				}
-
-				
 				
 				//제조사 검색  구현
+				else if(key.equals("maker")) {
+					for(Food food : foods) {
+						if(food.getMaker().contains(word)) {
+							finds.add(food);
+						}
+					}
+				}
 				
-				
-				// 원재료 검색 구현
-				
-				
-				
-				
-				
-				
+				// 원재료 검색 구현	
+				else if(key.equals("material")) {
+					for(Food food : foods) {
+						if(food.getMaterial().contains(word)) {
+							finds.add(food);
+						}
+					}
+				}
 				
 			}else {
 				finds = foods;
@@ -90,11 +95,13 @@ public class FoodDaoImpl implements FoodDao{
 	 * @return	식품 코드에 해당하는 식품 정보, 없으면 null이 리턴됨
 	 */
 	public Food search(int code) {
-		
-		
-		
+
 		// 코드에 맞는 식품 검색하여 리턴
-		
+		for(Food food : foods) {
+			if(food.getCode()==code) {
+				return food;
+			}
+		}
 		
 		return null;
 	}
