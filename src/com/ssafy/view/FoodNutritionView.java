@@ -33,7 +33,7 @@ import com.ssafy.vo.FoodPageBean;
 import com.ssafy.vo.SafeFoodException;
 
 
-public class FoodInfoView{
+public class FoodNutritionView{
 	
 	/**model들 */
 	private FoodService 		foodService;
@@ -83,15 +83,11 @@ public class FoodInfoView{
 					frame.setVisible(false);
 				}else if(source == searchBt) { 
 					searchFoods();
-				}else if(source == addBt) {
-					changeView();
 				}
 			} catch (SafeFoodException ue) {
 			     ue.printStackTrace();	
 			}
 		}
-
-		
 	};
 	MouseAdapter handler = new MouseAdapter() {
 		@Override
@@ -111,9 +107,6 @@ public class FoodInfoView{
 		
 	};
 
-	private void changeView() {
-		new FoodNutritionView();
-	}
 	private void showFoodInfo(int code) {
 		curfood = foodService.search(code);
 		nutritionL[0].setText(curfood.getSupportpereat()+"g");
@@ -142,11 +135,11 @@ public class FoodInfoView{
 		img = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 		imgL.setIcon(new ImageIcon(img));
 	}
-	public FoodInfoView(){
+	public FoodNutritionView(){
 		/*Service들 생성 */
 		foodService = new FoodServiceImpl();
 		/*메인 화면 설정 */
-		frame = new JFrame("Safe Food -- 상품 정보");
+		frame = new JFrame("Safe Food -- 섭취 영양 정보 관리");
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
 				frame.dispose();
@@ -265,9 +258,5 @@ public class FoodInfoView{
 			foodModel.setDataVector(data, title);
 		}
 	}
-	public static void main(String[] args) {
-		new FoodInfoView();
-	}
-	
 }
 
