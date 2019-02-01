@@ -71,6 +71,10 @@ public class FoodNutritionView{
 	/**화면에 표시하고 있는 상품*/
 	private Food curfood;
 	
+	
+	/**섭취내역 label*/
+	private JLabel eat;
+	
 
 	
 
@@ -83,11 +87,16 @@ public class FoodNutritionView{
 					frame.setVisible(false);
 				}else if(source == searchBt) { 
 					searchFoods();
+				}else if(source == addBt) {
+					changeView();
+
 				}
 			} catch (SafeFoodException ue) {
 			     ue.printStackTrace();	
 			}
 		}
+
+		
 	};
 	MouseAdapter handler = new MouseAdapter() {
 		@Override
@@ -107,6 +116,9 @@ public class FoodNutritionView{
 		
 	};
 
+	private void changeView() {
+		new FoodNutritionView();
+	}
 	private void showFoodInfo(int code) {
 		curfood = foodService.search(code);
 		nutritionL[0].setText(curfood.getSupportpereat()+"g");
@@ -135,7 +147,7 @@ public class FoodNutritionView{
 		img = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 		imgL.setIcon(new ImageIcon(img));
 	}
-	public FoodNutritionView(){
+	 public FoodNutritionView() {
 		/*Service들 생성 */
 		foodService = new FoodServiceImpl();
 		/*메인 화면 설정 */
@@ -200,28 +212,32 @@ public class FoodNutritionView{
 		/*오른쪽 화면을 위한 설정 */
 		JPanel right = new JPanel(new BorderLayout());
 		
-		JPanel rightTop = new JPanel(new GridLayout(1, 3));
+		JPanel rightTop = new JPanel(new GridLayout());
 		String[] item ={"---all---","이름","제조사","재료"}; 
 		findC = new JComboBox<String>(item);
 		wordTf= new TextField();
 		searchBt= new JButton("검색");
-		rightTop.add(findC);
-		rightTop.add(wordTf);
-		rightTop.add(searchBt);
+//		rightTop.add(findC);
+//		rightTop.add(wordTf);
+//		rightTop.add(searchBt);
+		rightTop.add(new JLabel(""));
+		rightTop.add(new JLabel("이번 주 섭취내역"));
+		rightTop.add(new JLabel(" "));
 		
 		JPanel rightCenter = new JPanel(new BorderLayout());
 		foodModel = new DefaultTableModel(title,20);
 		foodTable = new JTable(foodModel);
 		foodPan = new JScrollPane(foodTable);
 		foodTable.setColumnSelectionAllowed(true);
-		rightCenter.add(new JLabel("상품 목록", JLabel.CENTER),"North");
+		rightCenter.add(new JButton("이번 주"));
+		//rightCenter.add(new JLabel("상품 목록", JLabel.CENTER),"North");
 		rightCenter.add(foodPan,"Center");
 		
 		right.add(rightTop,"North");
 		right.add(rightCenter,"Center");
 		
 		JPanel mainP = new JPanel(new GridLayout(1, 2));
-		mainP.add(left);
+		mainP.add(leftR);
 		mainP.add(right);
 		frame.add(mainP,"Center");
 		
@@ -229,7 +245,7 @@ public class FoodNutritionView{
 		foodTable.addMouseListener(handler);
 		addBt.addActionListener(buttonHandler);
 		searchBt.addActionListener(buttonHandler);
-		closeBt.addActionListener(buttonHandler);
+		//closeBt.addActionListener(buttonHandler);
 		showFoods();
 	}
 	
@@ -258,5 +274,9 @@ public class FoodNutritionView{
 			foodModel.setDataVector(data, title);
 		}
 	}
+	public static void main(String[] args) {
+		new FoodNutritionView();
+	}
+	
 }
 

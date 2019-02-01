@@ -85,6 +85,7 @@ public class FoodInfoView{
 					searchFoods();
 				}else if(source == addBt) {
 					changeView();
+
 				}
 			} catch (SafeFoodException ue) {
 			     ue.printStackTrace();	
@@ -112,7 +113,9 @@ public class FoodInfoView{
 	};
 
 	private void changeView() {
-		new FoodNutritionView();
+		FoodNutritionView f = new FoodNutritionView();
+		JFrame frame = f.owner;
+		//new FoodNutritionView();
 	}
 	private void showFoodInfo(int code) {
 		curfood = foodService.search(code);
@@ -236,7 +239,7 @@ public class FoodInfoView{
 		foodTable.addMouseListener(handler);
 		addBt.addActionListener(buttonHandler);
 		searchBt.addActionListener(buttonHandler);
-		closeBt.addActionListener(buttonHandler);
+		//closeBt.addActionListener(buttonHandler);
 		showFoods();
 	}
 	
